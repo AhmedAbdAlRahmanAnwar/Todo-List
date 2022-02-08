@@ -31,6 +31,8 @@ var addTask = function () {
             alert("Task is already in the Todo List");
         }
     }
+
+    document.getElementById("removeItems").style.display = "block";    
 }
 
 //select button element
@@ -42,7 +44,15 @@ addButton.addEventListener('click', addTask);
 //Remove task from the list if the x sign is clicked 
 function removeTask(event) {
     if (event.target.nodeName.toLowerCase() === 'i') {
+        //first remove the task from the array of tasks
+        let task = event.target.previousSibling.textContent;
+        tasks.splice(tasks.indexOf(task),1);
+
         event.target.parentElement.remove();
+    }
+
+    if (tasks.length == 0) {
+        document.getElementById("removeItems").style.display = "none";
     }
 }
 todoList.addEventListener('click', removeTask);
@@ -63,9 +73,13 @@ function strikeTask(event) {
 }
 todoList.addEventListener('click', strikeTask);
 
-/*
-var clearItems = document.querySelector('.clearItems');
-clearItems.addEventListener('click', function(){
+
+var removeItems = document.querySelector('#removeItems');
+removeItems.addEventListener('click', function(){
     document.querySelectorAll(".item").forEach(e => e.remove());
+    //Empty the tasks array
+    tasks.length = 0;
+    document.getElementById("removeItems").style.display = "none";
 });
-*/
+
+
